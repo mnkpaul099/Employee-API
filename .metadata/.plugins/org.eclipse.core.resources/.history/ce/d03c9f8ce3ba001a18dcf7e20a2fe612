@@ -1,0 +1,33 @@
+package com.employee.model;
+
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Task {
+
+	@Id
+	private int taskId;
+	private String description;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH}, mappedBy = "tasks")
+	private Set<Employee> employee;
+	/**
+	public Task(int taskId, String description) {
+		super();
+		this.taskId = taskId;
+		this.description = description;
+	}
+	**/
+}

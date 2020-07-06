@@ -1,0 +1,21 @@
+package com.employee.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.employee.exceptions.ExistingEmployeeException;
+import com.employee.model.Employee;
+import com.employee.service.TaskService;
+
+@RestController
+public class TaskController {
+
+	@Autowired
+	private TaskService taskservice;
+	@PostMapping(path = { "/task/addEmployee" })
+    public Employee addEmployee(@RequestBody Employee employee) throws ExistingEmployeeException {
+        return taskService.addEmployeeService(employee);
+    }
+}

@@ -1,0 +1,14 @@
+package com.employee.dao;
+
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.employee.model.Task;
+
+@Repository
+@Transactional
+public interface TaskDao extends JpaRepository<Task, Integer> {
+
+}

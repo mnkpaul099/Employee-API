@@ -1,0 +1,41 @@
+package com.employee.model;
+
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "taskId")
+public class Task {
+
+	@Id
+	private int taskId;
+	private String description;
+	@ManyToMany(targetEntity = Employee.class, fetch = FetchType.LAZY, mappedBy = "tasks",
+			cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	/**
+	@JoinTable(name = "employee_task", 
+		joinColumns = { @JoinColumn(name = "employee_id")}, 
+		inverseJoinColumns = {@JoinColumn(name = "task_id")})
+		**/
+	private Set<Employee> employee;
+	
+}

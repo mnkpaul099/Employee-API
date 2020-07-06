@@ -1,0 +1,60 @@
+package com.employee.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.employee.dto.EmployeeDetailsResponse;
+import com.employee.exceptions.EmployeeNotFoundException;
+import com.employee.exceptions.ExistingEmployeeException;
+import com.employee.model.Employee;
+import com.employee.service.EmployeeService;
+
+@RestController
+@RequestMapping("/")
+public class EmployeeController {
+	
+	@Autowired
+	EmployeeService employeeService;
+	
+	@GetMapping("/admin/getAllEmployee")
+	public List<Employee> getAllEmployee() {
+		return employeeService.getAllEmployeeService();
+	}
+	
+	@GetMapping("/admin/findAllEmployee")
+	public List<EmployeeDetailsResponse> findAllEmployee() {
+		return employeeService.findAllEmployeeService();
+	}
+	
+	@GetMapping("/employee/{employeeId}")
+	public Employee getEmployee(@PathVariable("employeeId") long employeeId) throws EmployeeNotFoundException {
+		return employeeService.getEmployee(employeeId);
+	}
+	
+	@PostMapping(path = { "/admin/addEmployee" })
+    public Employee addEmployee(@RequestBody Employee employee) throws ExistingEmployeeException {
+        return employeeService.addEmployeeService(employee);
+    }
+	
+	@PutMapping(path = { "/admin/updateEmployee" })
+    public Employee updateOrder(@RequestBody  Employee employee) throws EmployeeNotFoundException {
+        return employeeService.updateEmployeeService(employee);
+    }
+	
+	@DeleteMapping({ "/admin/deleteEmployee/{employeeId}" })
+    public String deleteEmployee(@PathVariable("employeeId") long employeeId) throws EmployeeNotFoundException {
+        String deletedEmployee = employeeService.deleteEmployeeService(employeeId);
+        return deletedEmployee;
+    }
+}

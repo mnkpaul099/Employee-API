@@ -1,0 +1,5 @@
+package com.employee.ext.config;
+
+public class SecurityConfig {
+
+}

@@ -1,0 +1,76 @@
+package com.employee.model;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "employeeId")
+public class Employee {
+
+	@Id
+	private Long employeeId;
+	@NotBlank(message = "Employee name cannot be blank")
+	private String employeeName;
+	private String emailId;
+	private String designation;
+	
+	@OneToOne(targetEntity = Manager.class, cascade = CascadeType.ALL)
+	@JoinColumn(name="empmanager_fk")
+	private Manager manager;
+	@ManyToMany(targetEntity = Task.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	private List<Task> tasks;
+	
+	public Employee() {
+		super();
+	}
+
+	public Employee(Long employeeId, @NotBlank(message = "Employee name cannot be blank") String employeeName,
+			String emailId, String designation, Manager manager, List<Task> tasks) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.emailId = emailId;
+		this.designation = designation;
+		this.manager = manager;
+		this.tasks = tasks;
+	}
+	
+	public Long getEmployeeId() {
+		return employeeId;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public Manager getManager() {
+		return manager;
+	}
+	public List<Task> getTasks() {
+		return tasks;
+	}
+	
+}

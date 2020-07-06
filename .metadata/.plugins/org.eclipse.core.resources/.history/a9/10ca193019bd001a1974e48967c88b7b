@@ -1,0 +1,5 @@
+package com.mongo.entity;
+
+public class User {
+
+}

@@ -1,0 +1,15 @@
+server.port = 9080
+
+spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/assignment
+spring.datasource.username=postgres
+#master password=mainakpg
+spring.datasource.password=password
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto = create
+
+spring.application.name=employee-api
+eureka.client.serviceUrl.defaultZone= http://${registry.host:localhost}:${registry.port:8761}/eureka/
+eureka.client.healthcheck.enabled= true
+eureka.instance.leaseRenewalIntervalInSeconds= 1
+eureka.instance.leaseExpirationDurationInSeconds= 2

@@ -1,0 +1,9 @@
+package com.employee.service;
+
+import com.employee.model.Employee;
+
+public interface TaskService {
+
+	Employee addTaskService(Employee employee);
+
+}

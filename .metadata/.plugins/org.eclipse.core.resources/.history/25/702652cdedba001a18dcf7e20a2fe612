@@ -1,0 +1,19 @@
+package com.employee.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.employee.dao.TaskDao;
+import com.employee.model.Employee;
+
+public class TaskServiceImpl implements TaskService {
+
+	@Autowired
+	TaskDao taskDao;
+	
+	@Override
+	public Employee addTaskService(Employee employee) {
+		taskDao.save(task);
+		return null;
+	}
+
+}

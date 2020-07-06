@@ -1,0 +1,50 @@
+package com.employee.model;
+
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "employeeId")
+public class Employee {
+
+	@Id
+	private Long employeeId;
+	private String employeeName;
+	private String emailId;
+	private String designation;
+	
+	@OneToOne(targetEntity = Manager.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="empmanager_fk")
+	private Manager manager;
+	
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH}, 
+			fetch = FetchType.LAZY)
+	//@JoinTable(name = "employee_task", 
+			//joinColumns = {@JoinColumn(name = "employee_id")}, inverseJoinColumns = {@JoinColumn(name = "task_id")})
+	private Set<Task> tasks;
+	/**
+	public void addTask(Task t) {
+		tasks.add(t);
+	}
+	**/
+}

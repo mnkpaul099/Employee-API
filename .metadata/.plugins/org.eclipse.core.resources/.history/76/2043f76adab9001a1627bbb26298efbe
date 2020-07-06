@@ -1,0 +1,18 @@
+package com.employee.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.employee.model.Employee;
+
+@Repository
+public interface EmployeeDao extends JpaRepository<Employee, Long> {
+
+	@Query("select new com.employee.dto.EmployeeDetailsResponse(e.employeeId,e.employeeName,"
+			+ "e.designation,e.emailId,e.managerName,t.taskName) from Employee e JOIN t.Tasks t")
+	public List<Employee> findAllEmployeeDetails();
+
+}
